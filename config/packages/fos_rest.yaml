@@ -1,0 +1,42 @@
+fos_rest:
+    allowed_methods_listener:  true
+    param_fetcher_listener:  true
+
+    view:
+        view_response_listener:  true
+        failed_validation: HTTP_BAD_REQUEST
+        formats:
+            json: true
+            xml: false
+            rss: false
+        mime_types:
+            json: [ 'application/json', 'application/json;version=1.0']
+
+    body_listener:
+        decoders:
+            json: fos_rest.decoder.json
+
+    body_converter:
+        enabled: true
+        validate: true
+        validation_errors_argument: violations
+
+    format_listener:
+        rules:
+            - { path: ^/api, prefer_extension: false, fallback_format: json, priorities: [ json ] }
+
+    exception:
+        enabled: true
+        map_exception_codes: true
+        serializer_error_renderer: true
+
+    serializer:
+        serialize_null: true
+
+    versioning:
+        enabled: true
+        resolvers:
+            media_type:
+                enabled: true
+                regex: '/(v|version)=(?P<version>[0-9\.]+)/'
+

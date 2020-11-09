@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+    nginx:
+        ports:
+            - 80:80
+
+    mysql:
+        ports:
+            - 3306:3306
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: artsper_container_phpmyadmin
+        restart: always
+        environment:
+            PMA_HOST: mysql
+            MYSQL_USERNAME: root
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - 8080:80
